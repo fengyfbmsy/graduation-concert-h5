@@ -11,6 +11,11 @@
 ├── app.js
 ├── full_scale_poster.jpg
 ├── assets/
+│   ├── cloud-far-left.png
+│   ├── cloud-far-right.png
+│   ├── cloud-front-bottom.png
+│   ├── cloud-mid-main.png
+│   ├── cloud-small-right.png
 │   ├── poster-cloud-cap.jpg
 │   ├── poster-cloud-clean.jpg
 │   ├── poster-letter-bg.jpg
@@ -23,6 +28,7 @@
 ```
 
 `full_scale_poster.jpg` 是本地高清海报源文件，不会被页面直接加载。H5 实际加载的是 `assets/` 中的压缩裁切资源。
+首屏白云 PNG 由脚本从高清海报裁切并按天空蓝抠图生成，用于封面的远景、中景和前景云层。
 
 ## 本地运行
 
@@ -49,10 +55,11 @@ http://localhost:8080
 - 开场为专属云端信封，点击后信封打开，信纸抽出并展开。
 - 使用 CSS animation 实现云朵漂浮、学士帽轻微浮动、金色飘带摆动、音乐开关动效。
 - 使用 IntersectionObserver 实现滚动进入视口时的淡入上浮。
-- “复制活动信息”支持 Clipboard API，并内置微信兼容的降级复制方案。
-- “添加到日历”会生成 `.ics` 文件。
-- “查看地点”跳转腾讯地图搜索。
-- “保存海报”下载压缩后的 `assets/poster-preview.jpg`。
+- “复制活动信息”由用户点击触发，优先使用 Clipboard API，降级到 `textarea + document.execCommand('copy')`。
+- “查看地点”提供腾讯地图和高德地图网页搜索链接，并提供复制地址兜底。
+- “添加到日历”不会承诺直接写入系统日历，弹窗内提供复制日历信息和尝试下载 `.ics` 文件。
+- “生成分享海报”弹出海报预览层，提示用户长按图片保存或转发给朋友。
+- 所有底部按钮均按普通 H5 能力实现，不依赖公众号签名、小程序权限、微信 JS-SDK 或服务号接口。
 
 ## 重新导出海报资源
 

@@ -11,6 +11,8 @@
       content="清华大学咏恒合唱团毕业音乐会，2026.06.21 周日 13:30-14:30，北院学生活动中心。"
     />
     <link rel="preload" href="assets/poster-sky.jpg" as="image" />
+    <link rel="preload" href="assets/cloud-far-left.png" as="image" />
+    <link rel="preload" href="assets/cloud-small-right.png" as="image" />
     <link rel="preload" href="assets/poster-logo.jpg" as="image" />
     <link rel="preload" href="assets/poster-cloud-clean.jpg" as="image" />
     <link rel="stylesheet" href="styles.css" />
@@ -23,9 +25,10 @@
 
       <section class="opening-section" id="opening" aria-labelledby="opening-title">
         <div class="ambient-sky" aria-hidden="true">
-          <span class="cloud cloud-a"></span>
-          <span class="cloud cloud-b"></span>
-          <span class="cloud cloud-c"></span>
+          <span class="poster-cloud cloud-far cloud-far-a"></span>
+          <span class="poster-cloud cloud-far cloud-far-b"></span>
+          <span class="poster-cloud cloud-mid cloud-mid-a"></span>
+          <span class="poster-cloud cloud-mid cloud-mid-b"></span>
           <span class="spark spark-a"></span>
           <span class="spark spark-b"></span>
           <span class="gold-thread thread-a"></span>
@@ -55,6 +58,11 @@
             <span class="envelope-logo"></span>
           </span>
         </button>
+
+        <div class="front-clouds" aria-hidden="true">
+          <span class="poster-cloud cloud-front cloud-front-a"></span>
+          <span class="poster-cloud cloud-front cloud-front-b"></span>
+        </div>
 
         <p class="open-hint" data-hint>轻触打开邀请函</p>
         <p class="scroll-hint">向上滑动阅读邀请函</p>
@@ -161,24 +169,70 @@
               <span class="action-icon icon-calendar" aria-hidden="true"></span>
               添加到日历
             </button>
-            <a
-              class="action-button"
-              href="https://apis.map.qq.com/uri/v1/search?keyword=%E5%8C%97%E9%99%A2%E5%AD%A6%E7%94%9F%E6%B4%BB%E5%8A%A8%E4%B8%AD%E5%BF%83%20%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6&referer=cantare_sempre"
-              target="_blank"
-              rel="noopener"
-            >
+            <button class="action-button" type="button" data-map>
               <span class="action-icon icon-pin" aria-hidden="true"></span>
               查看地点
-            </a>
-            <a class="action-button" href="assets/poster-preview.jpg" download="graduation-concert-poster.jpg">
+            </button>
+            <button class="action-button" type="button" data-poster>
               <span class="action-icon icon-download" aria-hidden="true"></span>
-              保存海报
-            </a>
+              生成分享海报
+            </button>
           </div>
           <p class="toast" role="status" aria-live="polite"></p>
         </div>
       </section>
     </main>
+
+    <div class="modal-layer" data-modal-layer hidden>
+      <section class="modal-panel" data-modal="calendar" role="dialog" aria-modal="true" aria-labelledby="calendar-modal-title" hidden>
+        <button class="modal-close" type="button" data-close-modal aria-label="关闭">×</button>
+        <p class="eyebrow">Calendar</p>
+        <h2 id="calendar-modal-title">添加到日历</h2>
+        <p class="modal-copy">
+          普通 H5 无法稳定直接写入系统日历。你可以先复制日历信息，或尝试下载 .ics 文件后手动导入。
+        </p>
+        <div class="modal-actions">
+          <button class="action-button" type="button" data-copy-calendar>复制日历信息</button>
+          <button class="action-button" type="button" data-download-ics>尝试下载 .ics 文件</button>
+        </div>
+      </section>
+
+      <section class="modal-panel" data-modal="map" role="dialog" aria-modal="true" aria-labelledby="map-modal-title" hidden>
+        <button class="modal-close" type="button" data-close-modal aria-label="关闭">×</button>
+        <p class="eyebrow">Location</p>
+        <h2 id="map-modal-title">查看地点</h2>
+        <p class="modal-copy">
+          将打开地图网页搜索“北院学生活动中心 情人坡东南侧”。如果地图无法打开，可复制地址后手动搜索。
+        </p>
+        <div class="modal-actions">
+          <a
+            class="action-button"
+            href="https://apis.map.qq.com/uri/v1/search?keyword=%E5%8C%97%E9%99%A2%E5%AD%A6%E7%94%9F%E6%B4%BB%E5%8A%A8%E4%B8%AD%E5%BF%83%20%E6%83%85%E4%BA%BA%E5%9D%A1%E4%B8%9C%E5%8D%97%E4%BE%A7&referer=cantare_sempre"
+            target="_blank"
+            rel="noopener"
+          >
+            打开腾讯地图
+          </a>
+          <a
+            class="action-button"
+            href="https://uri.amap.com/search?keyword=%E5%8C%97%E9%99%A2%E5%AD%A6%E7%94%9F%E6%B4%BB%E5%8A%A8%E4%B8%AD%E5%BF%83%20%E6%83%85%E4%BA%BA%E5%9D%A1%E4%B8%9C%E5%8D%97%E4%BE%A7"
+            target="_blank"
+            rel="noopener"
+          >
+            打开高德地图
+          </a>
+          <button class="action-button" type="button" data-copy-address>复制地址</button>
+        </div>
+      </section>
+
+      <section class="modal-panel poster-panel" data-modal="poster" role="dialog" aria-modal="true" aria-labelledby="poster-modal-title" hidden>
+        <button class="modal-close" type="button" data-close-modal aria-label="关闭">×</button>
+        <p class="eyebrow">Poster</p>
+        <h2 id="poster-modal-title">分享海报</h2>
+        <p class="modal-copy">长按图片保存或转发给朋友。</p>
+        <img class="poster-preview" src="assets/poster-preview.jpg" alt="毕业音乐会分享海报" />
+      </section>
+    </div>
 
     <script src="app.js"></script>
   </body>
